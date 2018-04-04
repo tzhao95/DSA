@@ -22,7 +22,7 @@ SimpleList<T>* searchSimpleList(string name, list<SimpleList<T> *> &li) {
 
 template <typename T>
 void addToList(list<SimpleList<T> *> &li, string name, string listType, T dummyValue, ofstream &output) {
-	SimpleList<T> *found = searchSimpleLIst(name, li);
+	SimpleList<T> *found = searchSimpleList(name, li);
 	if(found) {
 		output << "ERROR: This name already exists!" << endl;
 	} 
@@ -35,6 +35,17 @@ void addToList(list<SimpleList<T> *> &li, string name, string listType, T dummyV
 			pSL = new Stack<T>(name, dummyValue);
 		}
 		li.push_front(pSL);
+	}
+};
+
+template <typename T>
+void pushValue(list<SimpleList<T> *> &li, string name, T value, ofstream &output) {
+	SimpleList<T> *found = searchSimpleList(name, li);
+	if(found) {
+		found->push(value);
+	}
+	else {
+		output << "ERROR: This name does not exist!" << endl;
 	}
 };
 
@@ -63,7 +74,7 @@ int main() {
 	cout << "Enter name of output file: ";
 	cin >> outputFile;
 
-	list<SimpleList<int> *> listSli;
+	list<SimpleList<int> *> listSLi;
 	list<SimpleList<double> *> listSLd;
 	list<SimpleList<string> *> listSLs;
 
@@ -75,9 +86,9 @@ int main() {
 		while(getline(input, line)) {
 			output << "PROCESSING COMMAND: " << line << endl;
 			int split1 = line.find_first_of(" ");
-			int pslit2 = line.find_last_of(" ");
+			int split2 = line.find_last_of(" ");
 
-			char classType = line.as(split1 + 1);
+			char classType = line.at(split1 + 1);
 
 			if (split1 == split2) {
 				string name = line.substr(split1 + 2);
@@ -98,7 +109,7 @@ int main() {
 					addToList(listSLi, name, listType, 0, output);
 				}
 				else if(classType == 'd') {
-					addToList(listSLd, namype, 0.0, output);
+					addToList(listSLd, name, listType, 0.0, output);
 				}
 				else {
 					string dummy = "0";
@@ -107,7 +118,7 @@ int main() {
 			}
 			else {
 				string name = line.substr(split1 + 2, split2 - (split1 + 2));
-				string listType = line.substr(split2 + 1);
+				string value = line.substr(split2 + 1);
 				if(classType == 'i') {
 					pushValue(listSLi, name, atoi(value.c_str()), output);
 				}

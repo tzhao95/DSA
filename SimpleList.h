@@ -9,38 +9,38 @@ using namespace std;
 template <class T>
 class SimpleList {
 	private:
-		string name; //Name of SimpleList
+		string name;
 		class Node {
 		public:
-			T data; //stored value of type T
-			Node *next; //pointer to next node
-			Node(Node nextNode, T value) : data(value), next(nextNode) {};
+			T data; 
+			Node *next; 
+			Node(Node *nextNode, T value) : data(value), next(nextNode) {};
 		};
 
 	public:
 		Node *head;
 		Node *tail;
 		SimpleList(string listName, T type) : name(listName) {
-			tail = new Node(Null, type); 
+			tail = new Node(NULL, type); 
 			head = new Node(tail, type);
 		};
 
 		Node *start = NULL;
 		Node *end = NULL;
 
+		virtual void push(T value) {};
+		virtual T pop() {};
+
 		string getName() {
 			return name;
 		};
-
-		virtual void push(T value) {};
-		virtual T pop() {};
 
 		bool empty() {
 			if(head->next == tail) {
 				return true;
 			}
 			return false;
-		}
+		};
 
 	protected:
 		void push_front(T value) {
@@ -48,11 +48,17 @@ class SimpleList {
 				Node *item = new Node(start, value);
 				head->next = item;
 				start = item;
+				end = item;
+			}
+			else {
+				Node *item = new Node(start, value);
+				head->next = item;
+				start = item;
 			}
 		};
 
 		void push_back(T value) {
-			Node *item = new NOde(tail, value);
+			Node *item = new Node(tail, value);
 			if(empty()) {
 				head->next = item;
 				start = item;
