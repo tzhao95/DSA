@@ -1,4 +1,4 @@
-PROCESSING COMMAND: create i1 queue
+PPROCESSING COMMAND: create i1 queue
 PROCESSING COMMAND: create i1 queue
 ERROR: This name already exists!
 PROCESSING COMMAND: create i1 stack

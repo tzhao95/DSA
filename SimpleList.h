@@ -45,7 +45,7 @@ class SimpleList {
 	protected:
 		void push_front(T value) {
 			if(empty()) {
-				Node *item = new Node(start, value);
+				Node *item = new Node(tail, value);
 				head->next = item;
 				start = item;
 				end = item;
