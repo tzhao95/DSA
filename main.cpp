@@ -1,11 +1,13 @@
 //Tony Zhao
 //DSA Programming Project 1
-
+//This program takes an input file with a list of commands. Each command is read and processed and performed if possible.
+//The processed command is printed into an output file and if it cannot be executed, the error will be printed into the output file.
 #include <iostream>
 #include <fstream>
 #include <cstdlib>
 #include <list>
 #include <string>
+#include <sstream>
 #include "SimpleList.h"
 #include "Queue.h"
 #include "Stack.h"
@@ -89,7 +91,6 @@ int main() {
 
 	ifstream input (inputFile.c_str());
 	string line;
-
 	ofstream output (outputFile.c_str());
 	if(input.is_open()) {
 		while(getline(input, line)) {
@@ -129,11 +130,16 @@ int main() {
 			else { //must be Push command
 				string name = line.substr(space1 + 2, space2 - (space1 + 2));
 				string value = line.substr(space2 + 1);
+				stringstream var(value);
 				if(classType == 'i') { //check if list is integer list
-					pushValue(listSLi, name, atoi(value.c_str()), output);
+					int i;
+					var >> i;
+					pushValue(listSLi, name, i, output);
 				}
 				else if(classType == 'd') { //check if list is double list
-					pushValue(listSLd, name, atof(value.c_str()), output);
+					double d;
+					var >> d;
+					pushValue(listSLd, name, d, output);
 				}
 				else { //list must be string list
 					pushValue(listSLs, name, value, output);
